@@ -1,0 +1,27 @@
+{# src/Wyg/WygBundle/Resouces/views/Meetup/showcollection.html.twig #}
+{% extends 'WygWygBundle::layout.html.twig' %}
+
+{% block title %}Show ALL the meetups!{% endblock %}
+
+{% block body %}
+    <table class="meetup">
+        <tr>
+            <th>Name</th>
+            <th>Organizer</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Attendees</th>
+        </tr>
+        {% for meetup in meetups %}
+        <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+            <td><a href="{{ path('WygWygBundle_meetup_show', { 'id': meetup.id }) }}">{{ meetup.name }}</a></td>
+            <td>{{ meetup.owner.username }}</td>
+            <td>{{ meetup.owner.email }})</td>
+            <td>{{ meetup.dtmeetup|date('l, F j, Y H:I:s') }}</td>
+            <td>{{ meetup.attendees|length }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% include 'WygWygBundle:Meetup:addnew.html.twig' %}
+{% endblock %}

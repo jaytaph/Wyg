@@ -1,13 +1,65 @@
+<!-- app/Resources/views/base.html.twig -->
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+        <title>{% block title %}wyg{% endblock %} - WhereYouGo</title>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+
+        {% block stylesheets %}
+            <link href="{{ asset('css/screen.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+        <section id="wrapper">
+            <header id="header">
+                <div class="top">
+                    {% block navigation %}
+                        <nav>
+                            <ul class="navigation">
+                                <li><a href="{{ path('WygWygBundle_homepage') }}">Home</a></li>
+                                <li><a href="{{ path('WygWygBundle_meetup_showlatest', { 'count': 2 }) }}">Latest Meetups</a></li>
+                                <li><a href="{{ path('WygWygBundle_meetup_showall') }}">All Meetups</a></li>
+
+{% if app.user is not empty and is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <li><a href="{{ path('WygWygBundle_user_profile') }}">Profile</a> <img src="{{ gravatar(app.user.email, 25) }}"></li>
+                                <li><a href="{{ path('WygSecurityBundle_logout') }}">Logout</a></li>
+{% else %}
+                                <li><a href="{{ path('WygSecurityBundle_login') }}">Login</a></li>
+                                <li><a href="{{ path('WygWygBundle_user_register') }}">Register</a></li>
+{% endif %}
+                                <li><a href="{{ path('WygWygBundle_about') }}">About</a></li>
+                                <li><a href="{{ path('WygWygBundle_contact') }}">Contact</a></li>
+                            </ul>
+                        </nav>
+                    {% endblock %}
+                </div>
+
+                <hgroup>
+                    <h2>{% block blog_title %}<a href="#">WhereYouGo</a>{% endblock %}</h2>
+                    <h3>{% block blog_tagline %}<a href="#">Setup meetings and such</a>{% endblock %}</h3>
+                </hgroup>
+            </header>
+
+            <section class="main-col">
+                {% block notice %}{% endblock %}
+                {% block body %}{% endblock %}
+            </section>
+
+            <div id="footer">
+                {% block footer %}
+                    Copyright (C) {{ "now"|date("Y") }} Joshua Thijssen - All rights reserved
+                {% endblock %}
+            </div>
+        </section>
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

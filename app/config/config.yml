@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
+    - { resource: @WygWygBundle/Resources/config/config.yml }
 
 framework:
     #esi:             ~
@@ -58,3 +59,5 @@ swiftmailer:
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
+
+ornicar_gravatar: ~

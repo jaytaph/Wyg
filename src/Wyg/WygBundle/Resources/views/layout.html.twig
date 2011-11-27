@@ -1,0 +1,16 @@
+{# src/Wyg/WygBundle/Resources/views/layout.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/wygwyg/css/blog.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block notice %}
+    {% if app.session.hasFlash('notice') %}
+        <div class="blogger-notice">
+            {{ app.session.flash('notice') }}
+        </div>
+    {% endif %}
+{% endblock %}
+

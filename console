@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#
+# ./console -v doctrine:schema:update --force
+# ./console doctrine:generate:entities WygWygBundle:User
+# 
+#
+php ./app/console $@

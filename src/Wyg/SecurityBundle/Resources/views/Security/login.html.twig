@@ -1,0 +1,31 @@
+{# src/Wyg/SecurityBundle/Resources/views/Security/login.html.twig #}
+{% extends 'WygWygBundle::layout.html.twig' %}
+
+{% block title %}Contact{% endblock%}
+
+{% block body %}
+{% if error %}
+    <div>{{ error.message }}</div>
+{% endif %}
+
+<form action="{{ path('WygSecurityBundle_login_check') }}" method="post" class="blogger">
+    <div>
+      <label class=" required" for="_username">Username</label>
+      <input id="_username" type="text" value="{{ last_username }}" required="required" name="_username">
+    </div>
+
+    <div>
+      <label class=" required" for="_password">Password</label>
+      <input id="_password" type="password" value="" required="required" name="_password">
+    </div>
+
+    <div>
+      <label class=" required" for="_remember_me">Remember me?</label>
+      <input id="_remember_me" type="checkbox" name="_remember_me" checked />
+    </div>
+
+    <input type="submit" name="login" value="Login" />
+
+</form>
+
+{% endblock%}

@@ -1,4 +1,14 @@
-# Internal routing configuration to handle ESI
-#_internal:
-#   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
-#   prefix:   /_internal
+WygSecurityBundle_login:
+    pattern: /login
+    defaults: { _controller: WygSecurityBundle:Security:login }
+
+WygSecurityBundle_logout:
+    pattern: /logout
+    defaults: { _controller: WygSecurityBundle:Security:logout }
+
+WygSecurityBundle_login_check:
+    pattern: /login_check
+
+WygWygBundle:
+    resource: "@WygWygBundle/Resources/config/routing.yml"
+    prefix:   /

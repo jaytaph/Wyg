@@ -1,0 +1,27 @@
+{# src/Wyg/WygBundle/Resouces/views/Meetup/show.html.twig #}
+{% extends 'WygWygBundle::layout.html.twig' %}
+
+{% block title %}{{ meetup.name }}{% endblock %}
+
+{% block body %}
+    <article class="meetup">
+        <header>
+            <div class="date"><time datetime="{{ meetup.dtmeetup|date('c') }}">{{ meetup.dtmeetup|date('l, F j, Y H:I:s') }}</time></div>
+            <h2>{{ meetup.name }}</h2>
+        </header>
+        <div>
+            <p>{{ meetup.description }}</p>
+            <img src="{{ gravatar(meetup.owner.email) }}">
+        </div>
+        
+        <div>
+           <p>Attendees:</p>
+           {% for attendee in meetup.attendees %}
+             <a href="{{ path('WygWygBundle_user_show', { 'name': attendee.username }) }}"><img src="{{ gravatar(attendee.email, 25) }}" title="{{ attendee.username }}"></a><br />
+           {% endfor %}
+        </div>
+    </article>
+
+    <hr>
+    {% include 'WygWygBundle:Meetup:addnew.html.twig' %}
+{% endblock %}

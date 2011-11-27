@@ -1,0 +1,9 @@
+{# src/Wyg/WygBundle/Resources/view/Page/contactEmail.txt.twig #}
+Oh hai {{ user.firstname }}!
+
+Looks like you just registered on Wyg! To complete the registration, just click on the link below:
+
+{{ url('WygWygBundle_user_activate', { 'key': user.activationKey }) }}
+
+kthnxbai,
+The Wyg Crew!

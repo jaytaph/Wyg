@@ -1,0 +1,7 @@
+parameters:
+#    wyg_security.example.class: Wyg\SecurityBundle\Example
+
+services:
+#    wyg_security.example:
+#        class: %wyg_security.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
