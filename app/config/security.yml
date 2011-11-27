@@ -11,7 +11,7 @@ security:
 
     providers:
         main:
-            entity: { class: \Wyg\WygBundle\Entity\User, property: username }
+            entity: { class: Wyg\WygBundle\Entity\User, property: username }
 
     firewalls:
         form_login:

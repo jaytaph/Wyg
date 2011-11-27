@@ -62,7 +62,7 @@ class User implements UserInterface
 
 
 /**
-     * @ORM\ManyToMany(targetEntity="\Wyg\SecurityBundle\Entity\Role")
+     * @ORM\ManyToMany(targetEntity="Wyg\SecurityBundle\Entity\Role")
      * @ORM\JoinTable(name="user_role",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}

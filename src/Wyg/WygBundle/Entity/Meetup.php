@@ -360,7 +360,7 @@ class Meetup
     /**
      * Get owner
      *
-     * @return Wyg\WygBundle\Entity\User 
+     * @return Wyg\WygBundle\Entity\User
      */
     public function getOwner()
     {
