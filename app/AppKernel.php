@@ -24,6 +24,7 @@ class AppKernel extends Kernel
 
             // 3rd party (non-symfony2 standard bundles)
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
+            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -5,7 +5,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Wyg\WygBundle\Entity\Meetup;
 use Wyg\WygBundle\Entity\User;
 use Wyg\WygBundle\Form\MeetupType;
-
+use Ivory\GoogleMapBundle\Model\MapTypeId;
+use Ivory\GoogleMapBundle\Model\Overlays\Animation;
 
 /**
  * Meetup controller.
@@ -23,8 +24,34 @@ class MeetupController extends Controller
             throw $this->createNotFoundException('Unable to find this meetup.');
         }
 
+
+        // Requests the ivory google map marker service
+        $marker = $this->get('ivory_google_map.marker');
+
+        // Configure your marker options
+        $marker->setPrefixJavascriptVariable('marker_');
+        $marker->setPosition($meetup->getGeoLat(), $meetup->getGeoLong(), true);
+        $marker->setAnimation(Animation::DROP);
+
+        $marker->setOption('clickable', true);
+        $marker->setOption('flat', true);
+
+
+
+        // Requests the ivory google map service
+        $map = $this->get('ivory_google_map.map');
+        $map->setPrefixJavascriptVariable('map_');
+        $map->setHtmlContainerId('map_canvas');
+        $map->setCenter($meetup->getGeoLat(), $meetup->getGeoLong(), true);
+        $map->setMapOption('zoom', 16);
+        $map->setMapOption('mapTypeId', MapTypeId::HYBRID);
+        $map->setStylesheetOptions(array('width' => '300px', 'height' => '300px'));
+
+        $map->addMarker($marker);
+
         return $this->render('WygWygBundle:Meetup:show.html.twig', array(
             'meetup'      => $meetup,
+            'map'         => $map,
         ));
     }
 

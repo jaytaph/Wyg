@@ -40,6 +40,7 @@
 [SensioFrameworkExtraBundle]
     git=http://github.com/sensio/SensioFrameworkExtraBundle.git
     target=/bundles/Sensio/Bundle/FrameworkExtraBundle
+    version=origin/2.0
 
 [JMSSecurityExtraBundle]
     git=http://github.com/schmittjoh/JMSSecurityExtraBundle.git
@@ -59,3 +60,17 @@
     git=http://github.com/symfony/AsseticBundle.git
     target=/bundles/Symfony/Bundle/AsseticBundle
     version=v1.0.1
+
+[OrnicarGravatarBundle]
+    git=http://github.com/ornicar/GravatarBundle.git
+    target=/bundles/Ornicar/GravatarBundle
+
+[buzz]
+    git=http://github.com/kriswallsmith/Buzz.git
+
+[geocoder]
+    git=http://github.com/willdurand/Geocoder.git
+
+[IvoryGoogleMapBundle]
+    git=http://github.com/egeloen/IvoryGoogleMapBundle.git
+    target=/bundles/Ivory/GoogleMapBundle

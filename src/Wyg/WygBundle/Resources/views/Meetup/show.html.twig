@@ -17,7 +17,8 @@
 
         <div>
             <h3 >Location:</h3>
-            <p><img width=320 height=200 src="{{ gravatar(meetup.owner.email) }}"></p>
+            <p>{{ google_map_container(map) }}</p>
+            {{ google_map_js(map) }}
         </div>
         
         <div>

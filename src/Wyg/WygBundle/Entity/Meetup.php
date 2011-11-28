@@ -59,12 +59,12 @@ class Meetup
     protected $description;
 
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", precision="18", scale="12")
      */
     protected $geo_long;
 
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", precision="18", scale="12")
      */
     protected $geo_lat;
 
@@ -244,45 +244,6 @@ class Meetup
         return $this->event_id;
     }
 
-    /**
-     * Set long
-     *
-     * @param decimal $long
-     */
-    public function setLong($long)
-    {
-        $this->long = $long;
-    }
-
-    /**
-     * Get long
-     *
-     * @return decimal 
-     */
-    public function getLong()
-    {
-        return $this->long;
-    }
-
-    /**
-     * Set lat
-     *
-     * @param decimal $lat
-     */
-    public function setLat($lat)
-    {
-        $this->lat = $lat;
-    }
-
-    /**
-     * Get lat
-     *
-     * @return decimal 
-     */
-    public function getLat()
-    {
-        return $this->lat;
-    }
 
     /**
      * Set geo_long
