@@ -1,6 +1,5 @@
-
-I attended
-I'm attending
-
-
-<a href="{{ path('WygWygBundle_meetup_attending') }}">I'm attending</a>
+{% if not app.user or not meetup.isAttending(app.user) %}
+    [ <a href="{{ path('WygWygBundle_meetup_attend', { "id" : meetup.id, 'status' : "yes" }) }}">Sign up for the meetup</a> ]
+{% else %}
+    [ <a href="{{ path('WygWygBundle_meetup_attend', { "id" : meetup.id, 'status' : "no" }) }}">Sign off for the meetup</a> ]
+{% endif %}

@@ -33,6 +33,14 @@ WygWygBundle_meetup_show:
         _method:  GET
         id: \d+
 
+WygWygBundle_meetup_attend:
+    pattern:  /meetup/{id}/attend/{status}
+    defaults: { _controller: WygWygBundle:Meetup:attend }
+    requirements:
+        _method:  GET
+        id: \d+
+        status: yes|no
+
 WygWygBundle_user_show:
     pattern:  /user/{name}
     defaults: { _controller: WygWygBundle:User:show }

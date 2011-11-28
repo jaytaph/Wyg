@@ -115,4 +115,35 @@ class MeetupController extends Controller
         ));
     }
 
+
+    public function attendAction($id, $status)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $meetup = $em->getRepository('WygWygBundle:Meetup')->find($id);
+        if (!$meetup) {
+            throw $this->createNotFoundException('Unable to find this meetup.');
+        }
+
+        if ($status != "yes" and $status != "no") {
+            throw new \OutOfBoundsException("Either use 'yes' or 'no' as status");
+        }
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        // Set status to attending or not
+        if ($status == "yes") {
+            $meetup->addAttendee($user);
+            $notice = 'You have been added to the meetup';
+        } else {
+            $meetup->removeAttendee($user);
+            $notice = 'You have been removed from the meetup';
+        }
+        $em->persist($meetup);
+        $em->flush();
+
+
+        $this->get('session')->setFlash('notice', $notice);
+        return $this->redirect($this->generateUrl('WygWygBundle_meetup_show', array('id' => $meetup->getId())));
+    }
+
 }

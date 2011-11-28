@@ -69,7 +69,7 @@ class Meetup
     protected $geo_lat;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="meetups")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="meetups", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="meetup_attendees")
      */
     protected $attendees;
@@ -307,6 +307,14 @@ class Meetup
         $this->attendees[] = $user;
     }
 
+    public function removeAttendee(\Wyg\WygBundle\Entity\User $user)
+    {
+        foreach ($this->attendees as $k => $v) {
+            if ($user == $v) unset($this->attendees[$k]);
+        }
+    }
+
+
     /**
      * Get attendees
      *
@@ -336,5 +344,9 @@ class Meetup
     public function addUser(\Wyg\WygBundle\Entity\User $attendees)
     {
         $this->attendees[] = $attendees;
+    }
+
+    public function isAttending(\Wyg\WygBundle\Entity\User $user) {
+        return ($this->getAttendees()->contains($user));
     }
 }

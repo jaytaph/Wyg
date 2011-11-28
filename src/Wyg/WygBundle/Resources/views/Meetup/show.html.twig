@@ -16,6 +16,12 @@
         </div>
 
         <div>
+            <p>
+            {% include 'WygWygBundle:Meetup:attending.html.twig' %}
+            </p>
+        </div>
+
+        <div>
             <h3 >Location:</h3>
             <p>{{ google_map_container(map) }}</p>
             {{ google_map_js(map) }}

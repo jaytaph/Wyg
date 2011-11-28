@@ -43,3 +43,4 @@ security:
         - { path: ^/profile.*, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/register,  role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/meetup/new,  role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/meetup/\d+/attend,  role: IS_AUTHENTICATED_FULLY }
