@@ -66,6 +66,19 @@ WygWygBundle_user_activate:
     requirements:
         _method:  GET|POST
 
+WygWygBundle_user_forgot_confirm:
+    pattern:    /forgot/confirm/{email}/{key}
+    defaults: { _controller: WygWygBundle:User:forgotConfirm }
+    requirements:
+        _method:  GET|POST
+        email: .+
+        key: \w+
+
+WygWygBundle_user_forgot:
+    pattern:    /forgot
+    defaults: { _controller: WygWygBundle:User:forgot }
+    requirements:
+        _method:  GET|POST
 
 
 WygWygBundle_meetup_new:

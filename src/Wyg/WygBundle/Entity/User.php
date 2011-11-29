@@ -4,7 +4,12 @@
 namespace Wyg\WygBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+
+// @TODO: use advancedInterface: http://readthedocs.org/docs/test-sf-doc-es/en/latest/book/security/users.html
 
 /**
  * @ORM\Entity
@@ -60,8 +65,13 @@ class User implements UserInterface
      */
     protected $activationKey;
 
+    /**
+     * @ORM\Column(name="forgotpass_key", type="string", length="50", nullable=true)
+     */
+    protected $forgotPassKey;
 
-/**
+
+    /**
      * @ORM\ManyToMany(targetEntity="Wyg\SecurityBundle\Entity\Role")
      * @ORM\JoinTable(name="user_role",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
@@ -177,12 +187,13 @@ class User implements UserInterface
      */
     public function setPassword($password)
     {
-        if (empty($password)) return;
-
-        // @TODO: Not sure if this is the correct place (need @PrePersist?).
-        $factory = $this->get('security.encoder_factory');
-        $encoder = $factory->getEncoder($this);
-        $this->password = $encoder->encodePassword($password, $this->getSalt());
+        $this->password = $password;
+//        if (empty($password)) return;
+//
+//        // @TODO: Not sure if this is the correct place (need @PrePersist?).
+//        $factory = $this-> ->get('security.encoder_factory');
+//        $encoder = $factory->getEncoder($this);
+//        $this->password = $encoder->encodePassword($password, $this->getSalt());
     }
 
     /**
@@ -367,4 +378,35 @@ class User implements UserInterface
         return $this->activationKey;
     }
 
+    public function createForgotPasswordConfirmationKey() {
+        $this->setForgotPassKey(md5(microtime() . rand(1,getrandmax())));
+        return $this->getForgotPassKey();
+    }
+
+
+    /**
+     * Set forgotPassKey
+     *
+     * @param string $forgotPassKey
+     */
+    public function setForgotPassKey($forgotPassKey)
+    {
+        $this->forgotPassKey = $forgotPassKey;
+    }
+
+    /**
+     * Get forgotPassKey
+     *
+     * @return string 
+     */
+    public function getForgotPassKey()
+    {
+        return $this->forgotPassKey;
+    }
+
+    public function generatePassword() {
+        $password = substr(md5(microtime() . rand(1,getrandmax())), 0, 12);
+        $this->setPassword($password);
+        return $password;
+    }
 }

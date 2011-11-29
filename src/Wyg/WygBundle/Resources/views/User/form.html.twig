@@ -14,18 +14,22 @@
 
     {% if mode == "edit" %}
     <p>Modify your profile information here...</p>
+    {% set route = 'WygWygBundle_user_profile' %}
     {% else %}
     <p>Register, join and create meetups!</p>
+    {% set route = 'WygWygBundle_user_register' %}
     {% endif %}
 
     <div class="formDialog">
-    <form action="{{ path('WygWygBundle_user_register') }}" method="post" {{ form_enctype(form) }} class="blogger">
+    <form action="{{ path(route) }}" method="post" {{ form_enctype(form) }} class="blogger">
         {{ form_errors(form) }}
 
         <fieldset>
             <legend>Global info</legend>
             <br />
+    {% if mode == "add" %}
             {{ form_row(form.username) }}
+    {% endif %}
             {{ form_row(form.firstname) }}
             {{ form_row(form.lastname) }}
             {{ form_row(form.email) }}

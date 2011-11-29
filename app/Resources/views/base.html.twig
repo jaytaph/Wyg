@@ -29,7 +29,7 @@
                                 <li><a href="{{ path('WygWygBundle_meetup_showall') }}">All Meetups</a></li>
 
 {% if app.user is not empty and is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <li><a href="{{ path('WygWygBundle_user_profile') }}">Profile</a> <img src="{{ gravatar(app.user.email, 25) }}"></li>
+                                <li><a href="{{ path('WygWygBundle_user_profile') }}">{{ app.user.firstname }} Profile</a> <img src="{{ gravatar(app.user.email, 25) }}"></li>
                                 <li><a href="{{ path('WygSecurityBundle_logout') }}">Logout</a></li>
 {% else %}
                                 <li><a href="{{ path('WygSecurityBundle_login') }}">Login</a></li>

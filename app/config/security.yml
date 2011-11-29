@@ -40,7 +40,8 @@ security:
             anonymous : true
 
     access_control:
-        - { path: ^/profile.*, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/register,  role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forgot,    role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/profile.*, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/meetup/new,  role: IS_AUTHENTICATED_FULLY }
         - { path: ^/meetup/\d+/attend,  role: IS_AUTHENTICATED_FULLY }
