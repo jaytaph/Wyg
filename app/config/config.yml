@@ -61,3 +61,6 @@ jms_security_extra:
     secure_all_services: false
 
 ornicar_gravatar: ~
+
+parameters:
+    registration.betakeys: false

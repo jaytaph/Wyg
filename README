@@ -1,10 +1,10 @@
 [X] Create /registration
 [X]   - confirmation mail
-[ ] Forgot password
+[X] Forgot password
 [ ] Add meetups
 [ ] Add comments to meetups
 [ ] Show users
 [X] login user -> connect to meetup
 [ ] geomapping long/lat
-[ ] beta keys
+[X] beta keys
 

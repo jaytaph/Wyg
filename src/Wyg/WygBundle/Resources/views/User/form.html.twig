@@ -24,6 +24,13 @@
     <form action="{{ path(route) }}" method="post" {{ form_enctype(form) }} class="blogger">
         {{ form_errors(form) }}
 
+{% if form.betakey is defined %}
+        <fieldset>
+           <legend>Betakey</legend>
+           {{ form_row(form.betakey) }}
+        </fieldset>
+{% endif %}
+
         <fieldset>
             <legend>Global info</legend>
             <br />

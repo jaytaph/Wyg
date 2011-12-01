@@ -1,3 +1,16 @@
 Oh hai {{ user.firstname }}!
 
 Your account is activated. Have fun at Wyg!
+
+{% if newkeys|count > 0 %}
+Because you are just awesome, we have some extra betakeys for your friends:
+
+{% for betakey in newkeys %}
+  Key {{loop.index}} : {{ betakey.betakey }}
+{% endfor %}
+
+When registering, you need to fill out the betakey in the registration form. Each key can only be used once.
+
+{% endif %}
+
+

@@ -5,7 +5,9 @@ namespace Wyg\WygBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Wyg\WygBundle\Entity\User;
+use Wyg\WygBundle\Entity\Betakey;
 use Wyg\WygBundle\Form\UserType;
+use Wyg\WygBundle\Form\UserBetaKeyType;
 
 /**
  * User controller.
@@ -65,20 +67,43 @@ class UserController extends Controller
     public function registerAction()
     {
         $user = new User();
-        $form = $this->createForm(new UserType(), $user);
+
+
+        $useBetaKeys = $this->container->getParameter('registration.betakeys');
+        if ($useBetaKeys) {
+            $form = $this->createForm(new UserBetaKeyType(), $user);
+        } else {
+            $form = $this->createForm(new UserType(), $user);
+        }
+
+
 
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
 
+            $em = $this->getDoctrine()->getEntityManager();
+            if ($useBetaKeys) {
+                // Check beta keys
+                $formkey = $form->get('betakey')->getData();
+                $betakey = $em->getRepository('WygWygBundle:Betakey')->findOneByBetakey($formkey);
+                if (! $betakey) {
+                    $form->addError(new FormError('This beta key is not found, or already used.'));
+                } else {
+                    $em->remove($betakey);
+                    $em->flush();
+                }
+            }
+
+
             if ($form->isValid()) {
+                // Hash password for user
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
                 $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
                 $user->setPassword($password);
 
-                // Check if user exists
-                $em = $this->getDoctrine()->getEntityManager();
+                // Save user
                 $em->persist($user);
                 $em->flush();
 
@@ -121,30 +146,42 @@ class UserController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
+
+            $key = $form->get('activationkey')->getData();
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $user = $em->getRepository('WygWygBundle:User')->findOneByActivationKey($key);
+            if (!$user) {
+                $form->addError(new FormError('This activation key is not found, or already used.'));
+            }
+
             if ($form->isValid()) {
-                $data = $form->getData();
+                $user->activate();
+                $em->persist($user);
+                $em->flush();
 
-                $em = $this->getDoctrine()->getEntityManager();
-                $user = $em->getRepository('WygWygBundle:User')->findOneByActivationKey($data['activationkey']);
-                if (!$user) {
-                    $form->addError(new FormError('This activation key is not found, or already used.'));
-                } else {
-
-                    $user->activate();
-                    $em->persist($user);
-                    $em->flush();
-
-                    // Email user
-                    $message = \Swift_Message::newInstance()
-                        ->setSubject('Your new account at Wyg')
-                        ->setFrom('wyg@noxlogic.nl')
-                        ->setTo($user->getEmail())
-                        ->setBody($this->renderView('WygWygBundle:User:newAccountActivatedEmail.txt.twig', array('user' => $user)));
-                    $this->get('mailer')->send($message);
-
-                    $this->get('session')->setFlash('notice', 'Your profile has been activated!');
-                    return $this->redirect($this->generateUrl('WygWygBundle_homepage'));
+                // Add new betakeys
+                $newkeys = array();
+                $useBetaKeys = $this->container->getParameter('registration.betakeys');
+                if ($useBetaKeys) {
+                    for ($i=0; $i!=3; $i++) {
+                        $betakey = new Betakey();
+                        $newkeys[] = $betakey;
+                        $em->persist($betakey);
+                        $em->flush();
+                    }
                 }
+
+                // Email user
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Your new account at Wyg')
+                    ->setFrom('wyg@noxlogic.nl')
+                    ->setTo($user->getEmail())
+                    ->setBody($this->renderView('WygWygBundle:User:newAccountActivatedEmail.txt.twig', array('user' => $user, 'newkeys' => $newkeys)));
+                $this->get('mailer')->send($message);
+
+                $this->get('session')->setFlash('notice', 'Your profile has been activated!');
+                return $this->redirect($this->generateUrl('WygWygBundle_homepage'));
 
             }
         }
