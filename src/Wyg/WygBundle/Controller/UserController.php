@@ -69,7 +69,7 @@ class UserController extends Controller
         $user = new User();
 
 
-        $useBetaKeys = $this->container->getParameter('registration.betakeys');
+        $useBetaKeys = $this->container->getParameter('registration.betakeys.active');
         if ($useBetaKeys) {
             $form = $this->createForm(new UserBetaKeyType(), $user);
         } else {
@@ -133,13 +133,15 @@ class UserController extends Controller
      * Confirms a new account by its activate key
      */
     public function activateAction() {
-
+        // Dynamically create a activation form
         $form = $this->createFormBuilder()
                     ->add('activationkey', 'text')
                     ->getForm();
 
         $request = $this->getRequest();
 
+        // If the key is received from a GET request, we add the key data to the form. This way, the user only
+        // has to press the submit button.
         if ($request->getMethod() == 'GET' && $request->get('key')) {
             $form->setData(array('activationkey' => $request->get('key')));
         }
@@ -147,24 +149,25 @@ class UserController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
 
-            $key = $form->get('activationkey')->getData();
-
             $em = $this->getDoctrine()->getEntityManager();
+            $key = $form->get('activationkey')->getData();
             $user = $em->getRepository('WygWygBundle:User')->findOneByActivationKey($key);
             if (!$user) {
                 $form->addError(new FormError('This activation key is not found, or already used.'));
             }
 
             if ($form->isValid()) {
+                // Activate the user and save
                 $user->activate();
                 $em->persist($user);
                 $em->flush();
 
-                // Add new betakeys
+                // Add an amount of new betakeys if needed
                 $newkeys = array();
-                $useBetaKeys = $this->container->getParameter('registration.betakeys');
+                $useBetaKeys = $this->container->getParameter('registration.betakeys.active');
                 if ($useBetaKeys) {
-                    for ($i=0; $i!=3; $i++) {
+                    $respawn = $this->container->getParameter('registration.betakeys.respawn');
+                    for ($i=0; $i<$respawn; $i++) {
                         $betakey = new Betakey();
                         $newkeys[] = $betakey;
                         $em->persist($betakey);

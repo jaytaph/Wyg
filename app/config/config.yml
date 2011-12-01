@@ -63,4 +63,5 @@ jms_security_extra:
 ornicar_gravatar: ~
 
 parameters:
-    registration.betakeys: false
+    registration.betakeys.active: true
+    registration.betakeys.respawn: 3
