@@ -1,3 +1,6 @@
+# ====================================================================================
+#
+
 WygSecurityBundle_login:
     pattern: /login
     defaults: { _controller: WygSecurityBundle:Security:login }
@@ -9,6 +12,103 @@ WygSecurityBundle_logout:
 WygSecurityBundle_login_check:
     pattern: /login_check
 
-WygWygBundle:
-    resource: "@WygWygBundle/Resources/config/routing.yml"
-    prefix:   /
+#
+# ====================================================================================
+#
+WygDefaultBundle_homepage:
+    pattern:  /
+    defaults: { _controller: WygDefaultBundle:Default:index }
+    requirements:
+        _method:  GET
+
+WygDefaultBundle_about:
+    pattern:  /about
+    defaults: { _controller: WygDefaultBundle:Page:about }
+    requirements:
+        _method:  GET
+WygDefaultBundle_contact:
+    pattern:  /about/contact
+    defaults: { _controller: WygDefaultBundle:Page:contact }
+    requirements:
+        _method:  GET|POST
+
+#
+# ====================================================================================
+#
+
+WygUserBundle_user_show:
+    pattern:  /user/{name}
+    defaults: { _controller: WygUserBundle:User:show }
+    requirements:
+        _method:  GET
+        name: \w+
+
+WygUserBundle_user_profile:
+    pattern:    /profile
+    defaults: { _controller: WygUserBundle:User:profile }
+    requirements:
+        _method:  GET|POST
+
+WygUserBundle_user_register:
+    pattern:    /register
+    defaults: { _controller: WygUserBundle:Registration:register }
+    requirements:
+        _method:  GET|POST
+
+WygUserBundle_user_activate:
+    pattern:    /register/activate
+    defaults: { _controller: WygUserBundle:Registration:activate }
+    requirements:
+        _method:  GET|POST
+
+WygUserBundle_user_forgot_confirm:
+    pattern:    /forgot/confirm/{email}/{key}
+    defaults: { _controller: WygUserBundle:ForgotPassword:forgotConfirm }
+    requirements:
+        _method:  GET|POST
+        email: .+
+        key: \w+
+
+WygUserBundle_user_forgot:
+    pattern:    /forgot
+    defaults: { _controller: WygUserBundle:ForgotPassword:forgot }
+    requirements:
+        _method:  GET|POST
+
+#
+# ====================================================================================
+#
+
+WygMeetupBundle_meetup_latest:
+    pattern:  /meetup/latest/{count}
+    defaults: { _controller: WygMeetupBundle:Meetup:showLatest, count: 15 }
+    requirements:
+        _method:  GET
+        count: \d+
+
+WygMeetupBundle_meetup_new:
+    pattern:  /meetup/new
+    defaults: { _controller: WygMeetupBundle:Meetup:new }
+    requirements:
+        _method:  GET|POST
+
+WygMeetupBundle_meetup_all:
+    pattern:  /meetups
+    defaults: { _controller: WygMeetupBundle:Meetup:showAll }
+    requirements:
+        _method:  GET
+
+WygMeetupBundle_meetup_show:
+    pattern:  /meetup/{id}
+    defaults: { _controller: WygMeetupBundle:Meetup:show }
+    requirements:
+        _method:  GET
+        id: \d+
+
+WygMeetupBundle_meetup_attend:
+    pattern:  /meetup/{id}/attend/{status}
+    defaults: { _controller: WygMeetupBundle:Meetup:attend }
+    requirements:
+        _method:  GET
+        id: \d+
+        status: yes|no

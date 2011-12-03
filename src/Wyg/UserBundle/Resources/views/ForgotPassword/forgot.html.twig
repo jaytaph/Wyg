@@ -1,0 +1,19 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Forgot your password{% endblock%}
+
+{% block body %}
+    <header>
+        <h1>Forgot your password</h1>
+    </header>
+
+    <p>Did you forgot your password? Enter your email address here to receive a new one!</p>
+
+    <form action="{{ path('WygUserBundle_user_forgot') }}" method="post" {{ form_enctype(form) }} class="blogger">
+        {{ form_errors(form) }}
+
+        {{ form_rest(form) }}
+
+        <input type="submit" value="Let me remember" />
+    </form>
+{% endblock %}

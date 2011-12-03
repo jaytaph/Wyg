@@ -1,6 +1,6 @@
 security:
     encoders:
-        Wyg\WygBundle\Entity\User:
+        Wyg\UserBundle\Entity\User:
             algorithm: sha1
             iterations: 1
             encode_as_base64: false
@@ -11,7 +11,7 @@ security:
 
     providers:
         main:
-            entity: { class: Wyg\WygBundle\Entity\User, property: username }
+            entity: { class: Wyg\UserBundle\Entity\User, property: username }
 
     firewalls:
         form_login:
@@ -42,6 +42,6 @@ security:
     access_control:
         - { path: ^/register,  role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/forgot,    role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/profile.*, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/profile,   role: IS_AUTHENTICATED_FULLY }
         - { path: ^/meetup/new,  role: IS_AUTHENTICATED_FULLY }
         - { path: ^/meetup/\d+/attend,  role: IS_AUTHENTICATED_FULLY }

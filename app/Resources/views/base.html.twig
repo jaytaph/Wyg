@@ -24,19 +24,19 @@
                     {% block navigation %}
                         <nav>
                             <ul class="navigation">
-                                <li><a href="{{ path('WygWygBundle_homepage') }}">Home</a></li>
-                                <li><a href="{{ path('WygWygBundle_meetup_showlatest', { 'count': 2 }) }}">Latest Meetups</a></li>
-                                <li><a href="{{ path('WygWygBundle_meetup_showall') }}">All Meetups</a></li>
+                                <li><a href="{{ path('WygDefaultBundle_homepage') }}">Home</a></li>
+                                <li><a href="{{ path('WygMeetupBundle_meetup_latest', { 'count': 2 }) }}">Latest Meetups</a></li>
+                                <li><a href="{{ path('WygMeetupBundle_meetup_all') }}">All Meetups</a></li>
 
 {% if app.user is not empty and is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <li><a href="{{ path('WygWygBundle_user_profile') }}">{{ app.user.firstname }} Profile</a> <img src="{{ gravatar(app.user.email, 25) }}"></li>
+                                <li><a href="{{ path('WygUserBundle_user_profile') }}">{{ app.user.firstname }} Profile</a> <img src="{{ gravatar(app.user.email, 25) }}"></li>
                                 <li><a href="{{ path('WygSecurityBundle_logout') }}">Logout</a></li>
 {% else %}
                                 <li><a href="{{ path('WygSecurityBundle_login') }}">Login</a></li>
-                                <li><a href="{{ path('WygWygBundle_user_register') }}">Register</a></li>
+                                <li><a href="{{ path('WygUserBundle_user_register') }}">Register</a></li>
 {% endif %}
-                                <li><a href="{{ path('WygWygBundle_about') }}">About</a></li>
-                                <li><a href="{{ path('WygWygBundle_contact') }}">Contact</a></li>
+                                <li><a href="{{ path('WygDefaultBundle_about') }}">About</a></li>
+                                <li><a href="{{ path('WygDefaultBundle_contact') }}">Contact</a></li>
                             </ul>
                         </nav>
                     {% endblock %}

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo ./console cache:clear
+sudo chown jthijssen:www-data . -R
+sudo chmod g+rw . -R

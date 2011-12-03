@@ -1,0 +1,5 @@
+{% if not app.user or not meetup.isAttending(app.user) %}
+    [ <a href="{{ path('WygMeetupBundle_meetup_attend', { "id" : meetup.id, 'status' : "yes" }) }}">Sign up for the meetup</a> ]
+{% else %}
+    [ <a href="{{ path('WygMeetupBundle_meetup_attend', { "id" : meetup.id, 'status' : "no" }) }}">Sign off for the meetup</a> ]
+{% endif %}

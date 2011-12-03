@@ -18,13 +18,15 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
 
-            // Our application bundles
-            new Wyg\WygBundle\WygWygBundle(),
-            new Wyg\SecurityBundle\WygSecurityBundle(),
-
             // 3rd party (non-symfony2 standard bundles)
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
+
+            // Our application bundles (defined last, so generate:bundle adds to the correct "group")
+            new Wyg\DefaultBundle\WygDefaultBundle(),
+            new Wyg\UserBundle\WygUserBundle(),
+            new Wyg\SecurityBundle\WygSecurityBundle(),
+            new Wyg\MeetupBundle\WygMeetupBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,7 +1,6 @@
 imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
-    - { resource: @WygWygBundle/Resources/config/config.yml }
 
 framework:
     #esi:             ~
@@ -63,5 +62,9 @@ jms_security_extra:
 ornicar_gravatar: ~
 
 parameters:
+    # Betakey info
     registration.betakeys.active: true
     registration.betakeys.respawn: 3
+
+    # Contact address
+    wyg_wyg.emails.contact_email: jthijssen@noxlogic.nl

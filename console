@@ -2,7 +2,7 @@
 
 #
 # ./console -v doctrine:schema:update --force
-# ./console doctrine:generate:entities WygWygBundle:User
+# ./console doctrine:generate:entities WygUserBundle:User
 # 
 #
 php ./app/console $@

@@ -1,5 +1,5 @@
 {# src/Wyg/SecurityBundle/Resources/views/Security/login.html.twig #}
-{% extends 'WygWygBundle::layout.html.twig' %}
+{% extends '::layout.html.twig' %}
 
 {% block title %}Contact{% endblock%}
 
@@ -30,8 +30,8 @@
 
 <p>
 <br/>
-<a href="{{ path('WygWygBundle_user_register') }}">Not yet registered? You can do that here</a><br />
-<a href="{{ path('WygWygBundle_user_forgot') }}">Forgot your password?</a><br />
+<a href="{{ path('WygUserBundle_user_register') }}">Not yet registered? You can do that here</a><br />
+<a href="{{ path('WygUserBundle_user_forgot') }}">Forgot your password?</a><br />
 </p>
 
 {% endblock%}

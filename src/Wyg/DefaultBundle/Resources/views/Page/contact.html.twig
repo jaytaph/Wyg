@@ -1,0 +1,25 @@
+{# src/Wyg/UserBundle/Resources/views/Page/contact.html.twig #}
+{% extends '::layout.html.twig' %}
+
+{% block title %}Contact{% endblock%}
+
+{% block body %}
+    <header>
+        <h1>Contact Wyg</h1>
+    </header>
+
+    <p>Want to contact wyg? Here is your chance...</p>
+
+    <form action="{{ path('WygDefaultBundle_contact') }}" method="post" {{ form_enctype(form) }} class="blogger">
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.subject) }}
+        {{ form_row(form.body) }}
+
+        {{ form_rest(form) }}
+
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}
